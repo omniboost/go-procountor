@@ -1,14 +1,14 @@
-package accountviewnet
+package bexio
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-bexio/utils"
 )
 
-func (c *Client) NewAccountviewDataGetRequest() AccountviewDataGetRequest {
-	r := AccountviewDataGetRequest{
+func (c *Client) NewBexioDataGetRequest() BexioDataGetRequest {
+	r := BexioDataGetRequest{
 		client:  c,
 		method:  http.MethodGet,
 		headers: http.Header{},
@@ -20,20 +20,20 @@ func (c *Client) NewAccountviewDataGetRequest() AccountviewDataGetRequest {
 	return r
 }
 
-type AccountviewDataGetRequest struct {
+type BexioDataGetRequest struct {
 	client      *Client
-	queryParams *AccountviewDataGetRequestQueryParams
-	pathParams  *AccountviewDataGetRequestPathParams
+	queryParams *BexioDataGetRequestQueryParams
+	pathParams  *BexioDataGetRequestPathParams
 	method      string
 	headers     http.Header
-	requestBody AccountviewDataGetRequestBody
+	requestBody BexioDataGetRequestBody
 }
 
-func (r AccountviewDataGetRequest) NewQueryParams() *AccountviewDataGetRequestQueryParams {
-	return &AccountviewDataGetRequestQueryParams{}
+func (r BexioDataGetRequest) NewQueryParams() *BexioDataGetRequestQueryParams {
+	return &BexioDataGetRequestQueryParams{}
 }
 
-type AccountviewDataGetRequestQueryParams struct {
+type BexioDataGetRequestQueryParams struct {
 	BusinessObject string `schema:"BusinessObject"`
 	PageSize       int    `schema:"PageSize"`
 	Fields         string `schema:"Fields,omitempty"`
@@ -54,7 +54,7 @@ type AccountviewDataGetRequestQueryParams struct {
 	SortOrder  string `schema:"SortOrder,omitempty"`
 }
 
-func (p AccountviewDataGetRequestQueryParams) ToURLValues() (url.Values, error) {
+func (p BexioDataGetRequestQueryParams) ToURLValues() (url.Values, error) {
 	encoder := utils.NewSchemaEncoder()
 	encoder.RegisterEncoder(Date{}, utils.EncodeSchemaMarshaler)
 	encoder.RegisterEncoder(DateTime{}, utils.EncodeSchemaMarshaler)
@@ -68,68 +68,68 @@ func (p AccountviewDataGetRequestQueryParams) ToURLValues() (url.Values, error) 
 	return params, nil
 }
 
-func (r *AccountviewDataGetRequest) QueryParams() *AccountviewDataGetRequestQueryParams {
+func (r *BexioDataGetRequest) QueryParams() *BexioDataGetRequestQueryParams {
 	return r.queryParams
 }
 
-func (r AccountviewDataGetRequest) NewPathParams() *AccountviewDataGetRequestPathParams {
-	return &AccountviewDataGetRequestPathParams{}
+func (r BexioDataGetRequest) NewPathParams() *BexioDataGetRequestPathParams {
+	return &BexioDataGetRequestPathParams{}
 }
 
-type AccountviewDataGetRequestPathParams struct {
+type BexioDataGetRequestPathParams struct {
 }
 
-func (p *AccountviewDataGetRequestPathParams) Params() map[string]string {
+func (p *BexioDataGetRequestPathParams) Params() map[string]string {
 	return map[string]string{}
 }
 
-func (r *AccountviewDataGetRequest) PathParams() *AccountviewDataGetRequestPathParams {
+func (r *BexioDataGetRequest) PathParams() *BexioDataGetRequestPathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataGetRequest) PathParamsInterface() PathParams {
+func (r *BexioDataGetRequest) PathParamsInterface() PathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataGetRequest) SetMethod(method string) {
+func (r *BexioDataGetRequest) SetMethod(method string) {
 	r.method = method
 }
 
-func (r *AccountviewDataGetRequest) Method() string {
+func (r *BexioDataGetRequest) Method() string {
 	return r.method
 }
 
-func (r AccountviewDataGetRequest) NewRequestBody() AccountviewDataGetRequestBody {
-	return AccountviewDataGetRequestBody{}
+func (r BexioDataGetRequest) NewRequestBody() BexioDataGetRequestBody {
+	return BexioDataGetRequestBody{}
 }
 
-type AccountviewDataGetRequestBody struct {
+type BexioDataGetRequestBody struct {
 }
 
-func (r *AccountviewDataGetRequest) RequestBody() *AccountviewDataGetRequestBody {
+func (r *BexioDataGetRequest) RequestBody() *BexioDataGetRequestBody {
 	return nil
 }
 
-func (r *AccountviewDataGetRequest) RequestBodyInterface() interface{} {
+func (r *BexioDataGetRequest) RequestBodyInterface() interface{} {
 	return nil
 }
 
-func (r *AccountviewDataGetRequest) SetRequestBody(body AccountviewDataGetRequestBody) {
+func (r *BexioDataGetRequest) SetRequestBody(body BexioDataGetRequestBody) {
 	r.requestBody = body
 }
 
-func (r *AccountviewDataGetRequest) NewResponseBody() *AccountviewDataGetResponseBody {
-	return &AccountviewDataGetResponseBody{}
+func (r *BexioDataGetRequest) NewResponseBody() *BexioDataGetResponseBody {
+	return &BexioDataGetResponseBody{}
 }
 
-type AccountviewDataGetResponseBody struct{}
+type BexioDataGetResponseBody struct{}
 
-func (r *AccountviewDataGetRequest) URL() *url.URL {
+func (r *BexioDataGetRequest) URL() *url.URL {
 	u := r.client.GetEndpointURL("accountviewdata", r.PathParams())
 	return &u
 }
 
-func (r *AccountviewDataGetRequest) Do() (AccountviewDataGetResponseBody, error) {
+func (r *BexioDataGetRequest) Do() (BexioDataGetResponseBody, error) {
 	// Create http request
 	req, err := r.client.NewRequest(nil, r)
 	if err != nil {

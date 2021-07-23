@@ -1,17 +1,17 @@
-package accountviewnet
+package bexio
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-bexio/utils"
 
 func (c *Client) NewDjPageGetRequest() DjPageGetRequest {
 	r := DjPageGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		BexioDataGetRequest: c.NewBexioDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "DJ2P"
+	r.BexioDataGetRequest.QueryParams().BusinessObject = "DJ2P"
 	return r
 }
 
 type DjPageGetRequest struct {
-	AccountviewDataGetRequest
+	BexioDataGetRequest
 }
 
 func (r *DjPageGetRequest) NewResponseBody() *DjPageGetResponseBody {

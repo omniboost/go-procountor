@@ -1,4 +1,4 @@
-package accountviewnet
+package bexio
 
 import (
 	"bytes"
@@ -23,7 +23,7 @@ import (
 
 const (
 	libraryVersion = "0.0.1"
-	userAgent      = "go-accountview.net/" + libraryVersion
+	userAgent      = "go-bexio/" + libraryVersion
 	mediaType      = "application/json"
 	charset        = "utf-8"
 )
@@ -31,7 +31,7 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "www.accountview.net",
+		Host:   "www.bexio",
 		Path:   "/api/v3",
 	}
 )
@@ -405,9 +405,9 @@ type BusinessObjectInterface interface {
 	Values() ([]interface{}, error)
 }
 
-func BusinessObjectToAccountviewDataPostRequest(client *Client, object BusinessObjectInterface, children []BusinessObjectInterface) (AccountviewDataPostRequest, error) {
+func BusinessObjectToBexioDataPostRequest(client *Client, object BusinessObjectInterface, children []BusinessObjectInterface) (BexioDataPostRequest, error) {
 	var err error
-	req := client.NewAccountviewDataPostRequest()
+	req := client.NewBexioDataPostRequest()
 	body := req.RequestBody()
 
 	body.BookDate = "2021-07-02T10:39:05.276Z"

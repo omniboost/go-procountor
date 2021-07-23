@@ -1,4 +1,4 @@
-package accountviewnet
+package bexio
 
 import (
 	"net/url"

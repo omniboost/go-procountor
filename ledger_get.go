@@ -1,17 +1,17 @@
-package accountviewnet
+package bexio
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-bexio/utils"
 
 func (c *Client) NewLedgerGetRequest() LedgerGetRequest {
 	r := LedgerGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		BexioDataGetRequest: c.NewBexioDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "GL1"
+	r.BexioDataGetRequest.QueryParams().BusinessObject = "GL1"
 	return r
 }
 
 type LedgerGetRequest struct {
-	AccountviewDataGetRequest
+	BexioDataGetRequest
 }
 
 func (r *LedgerGetRequest) NewResponseBody() *LedgerGetResponseBody {

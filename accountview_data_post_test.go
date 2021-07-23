@@ -1,22 +1,22 @@
-package accountviewnet_test
+package bexio_test
 
 import (
 	"encoding/json"
 	"log"
 	"testing"
 
-	accountviewnet "github.com/omniboost/go-accountview.net"
+	bexio "github.com/omniboost/go-bexio"
 )
 
-func TestAccountviewDataPost(t *testing.T) {
-	req := client.NewAccountviewDataPostRequest()
-	req.SetRequestBody(accountviewnet.AccountviewDataPostRequestBody{
+func TestBexioDataPost(t *testing.T) {
+	req := client.NewBexioDataPostRequest()
+	req.SetRequestBody(bexio.BexioDataPostRequestBody{
 		BookDate:       "2021-07-02T10:39:05.276Z",
 		BusinessObject: "DJ2",
-		Table: accountviewnet.Table{
-			Definition: accountviewnet.TableDefinition{
+		Table: bexio.Table{
+			Definition: bexio.TableDefinition{
 				Name: "DJ_PAGE",
-				Fields: accountviewnet.TableDefinitionFields{
+				Fields: bexio.TableDefinitionFields{
 					{
 						Name:      "RowId",
 						FieldType: "C",
@@ -35,10 +35,10 @@ func TestAccountviewDataPost(t *testing.T) {
 					},
 				},
 			},
-			DetailDefinitions: accountviewnet.TableDetailDefinitions{
+			DetailDefinitions: bexio.TableDetailDefinitions{
 				{
 					Name: "DJ_LINE",
-					Fields: accountviewnet.TableDefinitionFields{
+					Fields: bexio.TableDefinitionFields{
 						{
 							Name:      "RowId",
 							FieldType: "C",
@@ -75,9 +75,9 @@ func TestAccountviewDataPost(t *testing.T) {
 				},
 			},
 		},
-		TableData: accountviewnet.TableData{
-			Data: accountviewnet.TableDataData{
-				Rows: accountviewnet.Rows{
+		TableData: bexio.TableData{
+			Data: bexio.TableDataData{
+				Rows: bexio.Rows{
 					{
 						Values: []interface{}{
 							"1",
@@ -88,9 +88,9 @@ func TestAccountviewDataPost(t *testing.T) {
 					},
 				},
 			},
-			DetailData: accountviewnet.DetailData{
+			DetailData: bexio.DetailData{
 				{
-					Rows: accountviewnet.Rows{
+					Rows: bexio.Rows{
 						{
 							Values: []interface{}{
 								"1",

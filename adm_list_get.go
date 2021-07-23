@@ -1,6 +1,6 @@
-package accountviewnet
+package bexio
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-bexio/utils"
 
 func (c *Client) NewAdmListGetRequest() AdmListGetRequest {
 	r := AdmListGetRequest{

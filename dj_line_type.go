@@ -1,4 +1,4 @@
-package accountviewnet
+package bexio
 
 type DjLine struct {
 	AccrPy    bool    `json:"ACCR_PY" field_type:"L"`    // Posten vorig boekjaar

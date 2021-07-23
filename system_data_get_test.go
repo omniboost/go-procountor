@@ -1,11 +1,11 @@
-package accountviewnet_test
+package bexio_test
 
 import (
 	"encoding/json"
 	"fmt"
 	"testing"
 
-	accountviewnet "github.com/omniboost/go-accountview.net"
+	bexio "github.com/omniboost/go-bexio"
 )
 
 func TestSystemDataGet(t *testing.T) {
@@ -26,7 +26,7 @@ func TestSystemDataGet(t *testing.T) {
 	req.QueryParams().FilterValueType1 = "C"
 	// req.QueryParams().SortFields = "FLD_DESC"
 	// req.QueryParams().SortOrder = "Ascending"
-	req.QueryParams().Fields = accountviewnet.Fields{
+	req.QueryParams().Fields = bexio.Fields{
 		"dct_fld.FLD_DESC",
 		"dct_fld.FIELD_NAME",
 		"dct_fld.DBF_NAME",
@@ -42,7 +42,7 @@ func TestSystemDataGet(t *testing.T) {
 		t.Error(err)
 	}
 
-	// https://www.accountview.net/api/v3/accountviewsystemdata?businessobject=fld
+	// https://www.bexio/api/v3/accountviewsystemdata?businessobject=fld
 	// &pagesize=256
 	// &fields=dct_fld.FLD_DESC,dct_fld.FIELD_NAME,dct_fld.DBF_NAME,dct_fld.FIELD_LEN,dct_fld.FIELD_TYPE,dct_fld.INP_MAND,dct_fld.FLD_FMT,dct_fld.FLD_MASK,dct_fld.COM_BLK
 	// &FilterControlSource1=DBF_NAME

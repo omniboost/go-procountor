@@ -1,15 +1,15 @@
-package accountviewnet
+package bexio
 
 import (
 	"encoding/json"
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-bexio/utils"
 )
 
-func (c *Client) NewAccountviewDataPostRequest() AccountviewDataPostRequest {
-	r := AccountviewDataPostRequest{
+func (c *Client) NewBexioDataPostRequest() BexioDataPostRequest {
+	r := BexioDataPostRequest{
 		client:  c,
 		method:  http.MethodPost,
 		headers: http.Header{},
@@ -21,22 +21,22 @@ func (c *Client) NewAccountviewDataPostRequest() AccountviewDataPostRequest {
 	return r
 }
 
-type AccountviewDataPostRequest struct {
+type BexioDataPostRequest struct {
 	client      *Client
-	queryParams *AccountviewDataPostRequestQueryParams
-	pathParams  *AccountviewDataPostRequestPathParams
+	queryParams *BexioDataPostRequestQueryParams
+	pathParams  *BexioDataPostRequestPathParams
 	method      string
 	headers     http.Header
-	requestBody AccountviewDataPostRequestBody
+	requestBody BexioDataPostRequestBody
 }
 
-func (r AccountviewDataPostRequest) NewQueryParams() *AccountviewDataPostRequestQueryParams {
-	return &AccountviewDataPostRequestQueryParams{}
+func (r BexioDataPostRequest) NewQueryParams() *BexioDataPostRequestQueryParams {
+	return &BexioDataPostRequestQueryParams{}
 }
 
-type AccountviewDataPostRequestQueryParams struct{}
+type BexioDataPostRequestQueryParams struct{}
 
-func (p AccountviewDataPostRequestQueryParams) ToURLValues() (url.Values, error) {
+func (p BexioDataPostRequestQueryParams) ToURLValues() (url.Values, error) {
 	encoder := utils.NewSchemaEncoder()
 	encoder.RegisterEncoder(Date{}, utils.EncodeSchemaMarshaler)
 	encoder.RegisterEncoder(DateTime{}, utils.EncodeSchemaMarshaler)
@@ -50,74 +50,74 @@ func (p AccountviewDataPostRequestQueryParams) ToURLValues() (url.Values, error)
 	return params, nil
 }
 
-func (r *AccountviewDataPostRequest) QueryParams() *AccountviewDataPostRequestQueryParams {
+func (r *BexioDataPostRequest) QueryParams() *BexioDataPostRequestQueryParams {
 	return r.queryParams
 }
 
-func (r AccountviewDataPostRequest) NewPathParams() *AccountviewDataPostRequestPathParams {
-	return &AccountviewDataPostRequestPathParams{}
+func (r BexioDataPostRequest) NewPathParams() *BexioDataPostRequestPathParams {
+	return &BexioDataPostRequestPathParams{}
 }
 
-type AccountviewDataPostRequestPathParams struct {
+type BexioDataPostRequestPathParams struct {
 }
 
-func (p *AccountviewDataPostRequestPathParams) Params() map[string]string {
+func (p *BexioDataPostRequestPathParams) Params() map[string]string {
 	return map[string]string{}
 }
 
-func (r *AccountviewDataPostRequest) PathParams() *AccountviewDataPostRequestPathParams {
+func (r *BexioDataPostRequest) PathParams() *BexioDataPostRequestPathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataPostRequest) PathParamsInterface() PathParams {
+func (r *BexioDataPostRequest) PathParamsInterface() PathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataPostRequest) SetMethod(method string) {
+func (r *BexioDataPostRequest) SetMethod(method string) {
 	r.method = method
 }
 
-func (r *AccountviewDataPostRequest) Method() string {
+func (r *BexioDataPostRequest) Method() string {
 	return r.method
 }
 
-func (r AccountviewDataPostRequest) NewRequestBody() AccountviewDataPostRequestBody {
-	return AccountviewDataPostRequestBody{}
+func (r BexioDataPostRequest) NewRequestBody() BexioDataPostRequestBody {
+	return BexioDataPostRequestBody{}
 }
 
-type AccountviewDataPostRequestBody struct {
+type BexioDataPostRequestBody struct {
 	BookDate       string    `json:"BookDate"`
 	BusinessObject string    `json:"BusinessObject"`
 	Table          Table     `json:"Table"`
 	TableData      TableData `json:"TableData"`
 }
 
-func (r *AccountviewDataPostRequest) RequestBody() *AccountviewDataPostRequestBody {
+func (r *BexioDataPostRequest) RequestBody() *BexioDataPostRequestBody {
 	return &r.requestBody
 }
 
-func (r *AccountviewDataPostRequest) RequestBodyInterface() interface{} {
+func (r *BexioDataPostRequest) RequestBodyInterface() interface{} {
 	return r.RequestBody()
 }
 
-func (r *AccountviewDataPostRequest) SetRequestBody(body AccountviewDataPostRequestBody) {
+func (r *BexioDataPostRequest) SetRequestBody(body BexioDataPostRequestBody) {
 	r.requestBody = body
 }
 
-func (r *AccountviewDataPostRequest) NewResponseBody() *AccountviewDataPostResponseBody {
-	return &AccountviewDataPostResponseBody{}
+func (r *BexioDataPostRequest) NewResponseBody() *BexioDataPostResponseBody {
+	return &BexioDataPostResponseBody{}
 }
 
-type AccountviewDataPostResponseBody struct {
+type BexioDataPostResponseBody struct {
 	json.RawMessage
 }
 
-func (r *AccountviewDataPostRequest) URL() *url.URL {
+func (r *BexioDataPostRequest) URL() *url.URL {
 	u := r.client.GetEndpointURL("accountviewdata", r.PathParams())
 	return &u
 }
 
-func (r *AccountviewDataPostRequest) Do() (AccountviewDataPostResponseBody, error) {
+func (r *BexioDataPostRequest) Do() (BexioDataPostResponseBody, error) {
 	// Create http request
 	req, err := r.client.NewRequest(nil, r)
 	if err != nil {

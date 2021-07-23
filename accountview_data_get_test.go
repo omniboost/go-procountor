@@ -1,4 +1,4 @@
-package accountviewnet_test
+package bexio_test
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestAccountviewDataGet(t *testing.T) {
-	req := client.NewAccountviewDataGetRequest()
+func TestBexioDataGet(t *testing.T) {
+	req := client.NewBexioDataGetRequest()
 	req.QueryParams().BusinessObject = "VA1"
 	req.QueryParams().PageSize = 20
 	resp, err := req.Do()

@@ -1,17 +1,17 @@
-package accountviewnet
+package bexio
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-bexio/utils"
 
 func (c *Client) NewCostGetRequest() CostGetRequest {
 	r := CostGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		BexioDataGetRequest: c.NewBexioDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "CC1"
+	r.BexioDataGetRequest.QueryParams().BusinessObject = "CC1"
 	return r
 }
 
 type CostGetRequest struct {
-	AccountviewDataGetRequest
+	BexioDataGetRequest
 }
 
 func (r *CostGetRequest) NewResponseBody() *CostGetResponseBody {

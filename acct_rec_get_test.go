@@ -1,4 +1,4 @@
-package accountviewnet_test
+package bexio_test
 
 import (
 	"encoding/json"

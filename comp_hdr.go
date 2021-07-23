@@ -1,17 +1,17 @@
-package accountviewnet
+package bexio
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-bexio/utils"
 
 func (c *Client) NewCompHdrGetRequest() CompHdrGetRequest {
 	r := CompHdrGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		BexioDataGetRequest: c.NewBexioDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "CMP1"
+	r.BexioDataGetRequest.QueryParams().BusinessObject = "CMP1"
 	return r
 }
 
 type CompHdrGetRequest struct {
-	AccountviewDataGetRequest
+	BexioDataGetRequest
 }
 
 func (r *CompHdrGetRequest) NewResponseBody() *CompHdrGetResponseBody {

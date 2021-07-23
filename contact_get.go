@@ -1,17 +1,17 @@
-package accountviewnet
+package bexio
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-bexio/utils"
 
 func (c *Client) NewContactGetRequest() ContactGetRequest {
 	r := ContactGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		BexioDataGetRequest: c.NewBexioDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "CON"
+	r.BexioDataGetRequest.QueryParams().BusinessObject = "CON"
 	return r
 }
 
 type ContactGetRequest struct {
-	AccountviewDataGetRequest
+	BexioDataGetRequest
 }
 
 func (r *ContactGetRequest) NewResponseBody() *ContactGetResponseBody {

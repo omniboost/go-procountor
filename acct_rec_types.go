@@ -1,4 +1,4 @@
-package accountviewnet
+package bexio
 
 type AcctRec struct {
 	AcctNr string `json:"ACCT_NR"` // Verzamelrekening
@@ -37,9 +37,9 @@ func (acctRec AcctRec) Values() ([]interface{}, error) {
 	return FieldsToValues(acctRec, acctRec.Fields())
 }
 
-func (acctRec AcctRec) ToAccountviewDataPostRequest(client *Client) (AccountviewDataPostRequest, error) {
+func (acctRec AcctRec) ToBexioDataPostRequest(client *Client) (BexioDataPostRequest, error) {
 	children := make([]BusinessObjectInterface, 0)
-	return BusinessObjectToAccountviewDataPostRequest(client, acctRec, children)
+	return BusinessObjectToBexioDataPostRequest(client, acctRec, children)
 }
 
 type Contact struct {

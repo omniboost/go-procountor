@@ -1,10 +1,10 @@
-package accountviewnet
+package bexio
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-bexio/utils"
 )
 
 func (c *Client) NewFieldsGetRequest() FieldsGetRequest {

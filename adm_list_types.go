@@ -1,4 +1,4 @@
-package accountviewnet
+package bexio
 
 type AdmList struct {
 	AdmArch   bool     `json:"ADM_ARCH"`   // Gearchiveerd
