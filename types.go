@@ -36,3 +36,7 @@ type Tax struct {
 	StartMonth        int    `json:"start_month"`
 	EndMonth          int    `json:"end_month"`
 }
+
+type VATPeriods []VATPeriod
+
+type VATPeriod struct{}
