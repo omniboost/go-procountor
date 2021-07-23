@@ -22,7 +22,6 @@ func TestMain(m *testing.M) {
 	clientSecret := os.Getenv("CLIENT_SECRET")
 	refreshToken := os.Getenv("REFRESH_TOKEN")
 	tokenURL := os.Getenv("TOKEN_URL")
-	companyID := os.Getenv("COMPANY_ID")
 	debug := os.Getenv("DEBUG")
 	var baseURL *url.URL
 
@@ -36,10 +35,6 @@ func TestMain(m *testing.M) {
 	oauthConfig := bexio.NewOauth2Config()
 	oauthConfig.ClientID = clientID
 	oauthConfig.ClientSecret = clientSecret
-
-	if baseURL != nil {
-		oauthConfig.SetBaseURL(baseURL)
-	}
 
 	// set alternative token url
 	if tokenURL != "" {
@@ -56,7 +51,7 @@ func TestMain(m *testing.M) {
 	// get http client with automatic oauth logic
 	httpClient := oauthConfig.Client(oauth2.NoContext, token)
 
-	client = bexio.NewClient(httpClient, companyID)
+	client = bexio.NewClient(httpClient)
 	if debug != "" {
 		client.SetDebug(true)
 	}

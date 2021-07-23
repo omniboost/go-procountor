@@ -1,8 +1,6 @@
 package bexio
 
 import (
-	"net/url"
-	"strings"
 	"time"
 
 	"golang.org/x/oauth2"
@@ -27,23 +25,10 @@ func NewOauth2Config() *Oauth2Config {
 			ClientSecret: "",
 			Scopes:       []string{scope},
 			Endpoint: oauth2.Endpoint{
-				TokenURL: BaseURL.String() + "/token",
+				TokenURL: "https://idp.bexio.com/token",
 			},
 		},
 	}
 
-	config.SetBaseURL(&BaseURL)
 	return config
-}
-
-func (c *Oauth2Config) SetBaseURL(baseURL *url.URL) {
-	// Strip trailing slash
-	baseURL.Path = strings.TrimSuffix(baseURL.Path, "/")
-
-	// These are not registered in the oauth library by default
-	oauth2.RegisterBrokenAuthHeaderProvider(baseURL.String())
-
-	c.Config.Endpoint = oauth2.Endpoint{
-		TokenURL: baseURL.String() + "/token",
-	}
 }

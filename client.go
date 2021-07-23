@@ -12,12 +12,9 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"path"
-	"reflect"
-	"strconv"
 	"strings"
 	"text/template"
 
-	"github.com/fatih/structtag"
 	"github.com/pkg/errors"
 )
 
@@ -31,13 +28,13 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "www.bexio",
-		Path:   "/api/v3",
+		Host:   "api.bexio.com",
+		Path:   "/3.0",
 	}
 )
 
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, companyID string) *Client {
+func NewClient(httpClient *http.Client) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -45,7 +42,6 @@ func NewClient(httpClient *http.Client, companyID string) *Client {
 	client := &Client{}
 
 	client.SetHTTPClient(httpClient)
-	client.SetCompanyID(companyID)
 	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
@@ -64,7 +60,6 @@ type Client struct {
 	baseURL url.URL
 
 	// credentials
-	companyID string
 
 	// User agent for client
 	userAgent string
@@ -93,14 +88,6 @@ func (c Client) Debug() bool {
 
 func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
-}
-
-func (c Client) CompanyID() string {
-	return c.companyID
-}
-
-func (c *Client) SetCompanyID(companyID string) {
-	c.companyID = companyID
 }
 
 func (c Client) BaseURL() url.URL {
@@ -208,7 +195,6 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
-	r.Header.Add("X-Company", c.CompanyID())
 
 	return r, nil
 }
@@ -396,185 +382,4 @@ func checkContentType(response *http.Response) error {
 	}
 
 	return nil
-}
-
-type BusinessObjectInterface interface {
-	BusinessObject() string
-	Table() string
-	Fields() []string
-	Values() ([]interface{}, error)
-}
-
-func BusinessObjectToBexioDataPostRequest(client *Client, object BusinessObjectInterface, children []BusinessObjectInterface) (BexioDataPostRequest, error) {
-	var err error
-	req := client.NewBexioDataPostRequest()
-	body := req.RequestBody()
-
-	body.BookDate = "2021-07-02T10:39:05.276Z"
-	body.BusinessObject = object.BusinessObject()
-	body.Table.Definition, err = BusinessObjectToTableDefinition(object)
-	if err != nil {
-		return req, errors.WithStack(err)
-	}
-	body.TableData.Data, err = BusinessObjectToTableDataData(object)
-	if err != nil {
-		return req, errors.WithStack(err)
-	}
-
-	if len(children) > 0 {
-		detailDefinition, err := BusinessObjectToDetailDefinition(children[0])
-		if err != nil {
-			return req, errors.WithStack(err)
-		}
-		body.Table.DetailDefinitions = append(body.Table.DetailDefinitions, detailDefinition)
-
-		body.TableData.DetailData = make(DetailData, 1)
-		for _, c := range children {
-			rowID := strconv.Itoa(len(body.TableData.DetailData[0].Rows) + 1)
-			headerID := "1"
-			data, err := BusinessObjectToDetailData(c, rowID, headerID)
-			if err != nil {
-				return req, errors.WithStack(err)
-			}
-
-			body.TableData.DetailData[0].Rows = append(body.TableData.DetailData[0].Rows, data[0].Rows...)
-		}
-	}
-
-	return req, nil
-}
-
-func BusinessObjectToTableDefinition(object BusinessObjectInterface) (TableDefinition, error) {
-	definition := TableDefinition{}
-	definition.Name = object.Table()
-
-	ff := object.Fields()
-	dff, err := FieldsToDefinitionFields(object, ff)
-	if err != nil {
-		return definition, err
-	}
-
-	// add RowId table definition
-	dff = append(dff, TableDefinitionField{
-		Name:      "RowId",
-		FieldType: "C",
-	})
-
-	definition.Fields = dff
-	return definition, nil
-}
-
-func BusinessObjectToTableDataData(object BusinessObjectInterface) (TableDataData, error) {
-	tdd := TableDataData{}
-
-	values, err := object.Values()
-	if err != nil {
-		return tdd, errors.WithStack(err)
-	}
-
-	// add RowId value
-	values = append(values, []interface{}{"1"}...)
-
-	tdd.Rows = Rows{{values}}
-	return tdd, nil
-}
-
-func BusinessObjectToDetailDefinition(object BusinessObjectInterface) (TableDetailDefinition, error) {
-	definition := TableDetailDefinition{}
-	definition.Name = object.Table()
-
-	ff := object.Fields()
-	dff, err := FieldsToDefinitionFields(object, ff)
-	if err != nil {
-		return definition, err
-	}
-
-	// add RowId table definition
-	dff = append(dff, TableDefinitionField{
-		Name:      "RowId",
-		FieldType: "C",
-	})
-
-	// add HeaderId table definition
-	dff = append(dff, TableDefinitionField{
-		Name:      "HeaderId",
-		FieldType: "C",
-	})
-
-	definition.Fields = dff
-	return definition, nil
-}
-
-func BusinessObjectToDetailData(object BusinessObjectInterface, rowID, headerID string) (DetailData, error) {
-	dd := DetailData{
-		DetailDataEntry{
-			Rows: Rows{},
-		},
-	}
-
-	values, err := object.Values()
-	if err != nil {
-		return dd, errors.WithStack(err)
-	}
-
-	// add RowId & HeaderId value
-	values = append(values, []interface{}{rowID, headerID}...)
-
-	dd[0].Rows = Rows{{values}}
-	return dd, nil
-}
-
-func FieldsToDefinitionFields(object BusinessObjectInterface, fields []string) (TableDefinitionFields, error) {
-	tdf := make(TableDefinitionFields, len(fields))
-
-	for i, f := range fields {
-		field, ok := reflect.TypeOf(object).FieldByName(f)
-		if !ok {
-			return tdf, errors.Errorf("%s is not an existing field", f)
-		}
-
-		tags, err := structtag.Parse(string(field.Tag))
-		if err != nil {
-			return tdf, err
-		}
-
-		jsonTag, err := tags.Get("json")
-		if err != nil {
-			return tdf, err
-		}
-
-		// fieldTypeTag, err := tags.Get("field_type")
-		// if err != nil {
-		// 	return tdf, err
-		// }
-
-		value := reflect.ValueOf(object).FieldByName(f).Interface()
-		fieldType := ""
-		switch t := value.(type) {
-		case int:
-			fieldType = "I"
-		case string:
-			fieldType = "C"
-		case float64:
-			fieldType = "N"
-		case Date:
-			fieldType = "T"
-		default:
-			return tdf, errors.Errorf("Don't know how to map type %s", t)
-		}
-
-		tdf[i] = TableDefinitionField{Name: jsonTag.Name, FieldType: fieldType}
-	}
-
-	return tdf, nil
-}
-
-func FieldsToValues(object BusinessObjectInterface, fields []string) ([]interface{}, error) {
-	values := make([]interface{}, len(fields))
-
-	for i, f := range fields {
-		values[i] = reflect.ValueOf(object).FieldByName(f).Interface()
-	}
-
-	return values, nil
 }
