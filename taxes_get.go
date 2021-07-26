@@ -1,10 +1,10 @@
-package bexio
+package procountor
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-bexio/utils"
+	"github.com/omniboost/go-procountor/utils"
 )
 
 func (c *Client) NewTaxesGetRequest() TaxesGetRequest {

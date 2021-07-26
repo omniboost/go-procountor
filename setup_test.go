@@ -1,4 +1,4 @@
-package bexio_test
+package procountor_test
 
 import (
 	"log"
@@ -6,12 +6,12 @@ import (
 	"os"
 	"testing"
 
-	bexio "github.com/omniboost/go-bexio"
+	procountor "github.com/omniboost/go-procountor"
 	"golang.org/x/oauth2"
 )
 
 var (
-	client *bexio.Client
+	client *procountor.Client
 )
 
 func TestMain(m *testing.M) {
@@ -32,7 +32,7 @@ func TestMain(m *testing.M) {
 		}
 	}
 
-	oauthConfig := bexio.NewOauth2Config()
+	oauthConfig := procountor.NewOauth2Config()
 	oauthConfig.ClientID = clientID
 	oauthConfig.ClientSecret = clientSecret
 
@@ -51,7 +51,7 @@ func TestMain(m *testing.M) {
 	// get http client with automatic oauth logic
 	httpClient := oauthConfig.Client(oauth2.NoContext, token)
 
-	client = bexio.NewClient(httpClient)
+	client = procountor.NewClient(httpClient)
 	if debug != "" {
 		client.SetDebug(true)
 	}

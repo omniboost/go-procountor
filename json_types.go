@@ -1,4 +1,4 @@
-package bexio
+package procountor
 
 import (
 	"encoding/json"

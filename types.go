@@ -1,4 +1,4 @@
-package bexio
+package procountor
 
 type Accounts []Account
 

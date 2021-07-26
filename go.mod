@@ -1,4 +1,4 @@
-module github.com/omniboost/go-bexio
+module github.com/omniboost/go-procountor
 
 go 1.16
 

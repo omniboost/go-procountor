@@ -1,4 +1,4 @@
-package bexio
+package procountor
 
 import (
 	"time"
@@ -25,7 +25,7 @@ func NewOauth2Config() *Oauth2Config {
 			ClientSecret: "",
 			Scopes:       []string{scope},
 			Endpoint: oauth2.Endpoint{
-				TokenURL: "https://idp.bexio.com/token",
+				TokenURL: "https://idp.procountor.com/token",
 			},
 		},
 	}
