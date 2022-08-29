@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestTaxesGet(t *testing.T) {
-	req := client.NewTaxesGetRequest()
+func TestVatsDefaultGet(t *testing.T) {
+	req := client.NewVatsDefaultGetRequest()
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)

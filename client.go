@@ -15,6 +15,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/pkg/errors"
 )
 
@@ -29,7 +30,7 @@ var (
 	BaseURL = url.URL{
 		Scheme: "https",
 		Host:   "api.procountor.com",
-		Path:   "/3.0",
+		Path:   "/api",
 	}
 )
 
@@ -252,7 +253,7 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 		return httpResp, nil
 	}
 
-	errResp := &ErrorResponse{Response: httpResp}
+	errResp := &ErrorResponse{Response: httpResp, Errors: Errors{}}
 	err = c.Unmarshal(httpResp.Body, body, errResp)
 	if err != nil {
 		return httpResp, err
@@ -352,26 +353,49 @@ func CheckResponse(r *http.Response) error {
 }
 
 // {
-//   "ErrorType": "AccountViewError",
-//   "ErrorNumbers": null,
-//   "ErrorMessage": ""
+//   "errors": [
+//     {
+//       "status": 400,
+//       "message": "Value of the 'depreciation' field is invalid: "
+//     }
+//   ]
 // }
-
 type ErrorResponse struct {
 	// HTTP response that caused this error
 	Response *http.Response
 
-	Type    string      `json:"ErrorType"`
-	Numbers interface{} `json:"ErrorNumbers"`
-	Message string      `json:"ErrorMessage"`
+	Errors Errors
 }
 
 func (r *ErrorResponse) Error() string {
-	if r.Type == "" && r.Message == "" {
+	var err error
+	for i, e := range r.Errors {
+		if e.Error() != "" {
+			err = multierror.Append(err, &r.Errors[i])
+		}
+	}
+
+	if err == nil {
 		return ""
 	}
 
-	return fmt.Sprintf("%s: %s", r.Type, r.Message)
+	return err.Error()
+}
+
+type Errors []Error
+
+type Error struct {
+	Status  int    `json:"status"`
+	Field   string `json:"field"`
+	Message string `json:"message"`
+}
+
+func (e *Error) Error() string {
+	if e.Status == 0 && e.Field == "" && e.Message == "" {
+		return ""
+	}
+
+	return fmt.Sprintf("%s: %s (%d)", e.Field, e.Message, e.Status)
 }
 
 func checkContentType(response *http.Response) error {
