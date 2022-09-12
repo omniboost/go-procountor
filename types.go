@@ -197,18 +197,18 @@ func (i PaymentInfo) IsEmpty() bool {
 type InvoiceRows []InvoiceRow
 
 type InvoiceRow struct {
-	ProductID       int    `json:"productId,omitempty"`
-	Product         string `json:"product"`
-	ProductCode     string `json:"productCode,omitempty"`
-	Quantity        int    `json:"quantity"`
-	Unit            string `json:"unit"`
-	UnitPrice       int    `json:"unitPrice"`
-	DiscountPercent int    `json:"discountPercent"`
-	VatPercent      int    `json:"vatPercent"`
-	VatStatus       int    `json:"vatStatus"`
-	Comment         string `json:"comment"`
-	StartDate       string `json:"startDate,omitempty"`
-	EndDate         string `json:"endDate,omitempty"`
+	ProductID       int     `json:"productId,omitempty"`
+	Product         string  `json:"product"`
+	ProductCode     string  `json:"productCode,omitempty"`
+	Quantity        int     `json:"quantity"`
+	Unit            string  `json:"unit"`
+	UnitPrice       float64 `json:"unitPrice"`
+	DiscountPercent float64 `json:"discountPercent"`
+	VatPercent      float64 `json:"vatPercent"`
+	VatStatus       int     `json:"vatStatus"`
+	Comment         string  `json:"comment"`
+	StartDate       string  `json:"startDate,omitempty"`
+	EndDate         string  `json:"endDate,omitempty"`
 }
 
 type TravelInformationItems []TravelInformationItem
