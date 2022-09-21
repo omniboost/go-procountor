@@ -181,7 +181,7 @@ type PaymentInfo struct {
 		NumberOfDays       int `json:"numberOfDays"`
 		DiscountPercentage int `json:"discountPercentage"`
 	} `json:"cashDiscount,omitempty"`
-	BankReferenceCode     string `json:"bankReferenceCode,omitempty"`
+	BankReferenceCode     string `json:"bankReferenceCode"`
 	BankReferenceCodeType string `json:"bankReferenceCodeType,omitempty"`
 	ClearingCode          string `json:"clearingCode,omitempty"`
 }
