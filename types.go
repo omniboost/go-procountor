@@ -205,7 +205,7 @@ type InvoiceRow struct {
 	UnitPrice       float64 `json:"unitPrice"`
 	DiscountPercent float64 `json:"discountPercent"`
 	VatPercent      float64 `json:"vatPercent"`
-	VatStatus       int     `json:"vatStatus"`
+	VatStatus       int     `json:"vatStatus,omitempty"`
 	Comment         string  `json:"comment"`
 	StartDate       string  `json:"startDate,omitempty"`
 	EndDate         string  `json:"endDate,omitempty"`
