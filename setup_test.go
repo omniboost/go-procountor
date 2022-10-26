@@ -22,6 +22,7 @@ func TestMain(m *testing.M) {
 	clientSecret := os.Getenv("CLIENT_SECRET")
 	refreshToken := os.Getenv("REFRESH_TOKEN")
 	tokenURL := os.Getenv("TOKEN_URL")
+	apiKey := os.Getenv("API_KEY")
 	debug := os.Getenv("DEBUG")
 	var baseURL *url.URL
 
@@ -35,6 +36,7 @@ func TestMain(m *testing.M) {
 	oauthConfig := procountor.NewOauth2Config()
 	oauthConfig.ClientID = clientID
 	oauthConfig.ClientSecret = clientSecret
+	oauthConfig.APIKey = apiKey
 
 	// set alternative token url
 	if tokenURL != "" {
