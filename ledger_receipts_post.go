@@ -240,7 +240,7 @@ type LedgerReceiptsPostRequestBody struct {
 			// absolute values instead of percentages. The sum of dimension item
 			// values on a dimension must equal the accounting value of the
 			// parent transaction.
-			Value int `json:"value"`
+			Value float64 `json:"value"`
 		} `json:"dimensionItemValues"`
 		// VAT deduction percentage for the transaction.
 		VatDeductionPercent int `json:"vatDeductionPercent,omitempty"`
