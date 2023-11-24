@@ -178,9 +178,8 @@ type PaymentInfo struct {
 	CurrencyRate          int         `json:"currencyRate"`
 	PaymentTermPercentage int         `json:"paymentTermPercentage,omitempty"`
 	CashDiscount          struct {
-		NumberOfDays       int `json:"numberOfDays"`
-		DiscountPercentage int `json:"discountPercentage"`
-	} `json:"cashDiscount,omitempty"`
+        DiscountPercentage int `json:"discountPercentage,omitempty"`
+    } `json:"cashDiscount,omitempty"`
 	BankReferenceCode     string `json:"bankReferenceCode"`
 	BankReferenceCodeType string `json:"bankReferenceCodeType,omitempty"`
 	ClearingCode          string `json:"clearingCode,omitempty"`
