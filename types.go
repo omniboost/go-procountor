@@ -75,10 +75,12 @@ type VatStatus struct {
 type Invoices []Invoice
 
 type Invoice struct {
+	ID                     int                    `json:"id"`
 	PartnerID              int                    `json:"partnerId,omitempty"`
 	Type                   string                 `json:"type"`
 	Status                 string                 `json:"status"`
 	Date                   string                 `json:"date"`
+	DueDate                string                 `json:"dueDate"`
 	CounterParty           CounterParty           `json:"counterParty"`
 	BillingAddress         Address                `json:"billingAddress,omitempty"`
 	DeliveryAddress        Address                `json:"deliveryAddress,omitempty"`
@@ -89,6 +91,7 @@ type Invoice struct {
 	OrderReference         string                 `json:"orderReference"`
 	InvoiceRows            InvoiceRows            `json:"invoiceRows"`
 	VatStatus              int                    `json:"vatStatus"`
+	InvoiceNumber          int                    `json:"invoiceNumber"`
 	OriginalInvoiceNumber  string                 `json:"originalInvoiceNumber"`
 	DeliveryStartDate      string                 `json:"deliveryStartDate,omitempty"`
 	DeliveryEndDate        string                 `json:"deliveryEndDate,omitempty"`
@@ -119,6 +122,8 @@ type Invoice struct {
 	DeliverySite    string `json:"deliverySite,omitempty"`
 	TenderReference string `json:"tenderReference,omitempty"`
 	IsOffer         bool   `json:"isOffer,omitempty"`
+	Created         string `json:"created"`
+	Version         string `json:"version"`
 }
 
 func (i Invoice) MarshalJSON() ([]byte, error) {
