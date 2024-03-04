@@ -75,12 +75,12 @@ type VatStatus struct {
 type Invoices []Invoice
 
 type Invoice struct {
-	ID                     int                    `json:"id"`
+	ID                     int                    `json:"id,omitempty"`
 	PartnerID              int                    `json:"partnerId,omitempty"`
 	Type                   string                 `json:"type"`
 	Status                 string                 `json:"status"`
 	Date                   string                 `json:"date"`
-	DueDate                string                 `json:"dueDate"`
+	DueDate                string                 `json:"dueDate,omitempty"`
 	CounterParty           CounterParty           `json:"counterParty"`
 	BillingAddress         Address                `json:"billingAddress,omitempty"`
 	DeliveryAddress        Address                `json:"deliveryAddress,omitempty"`
@@ -122,8 +122,8 @@ type Invoice struct {
 	DeliverySite    string `json:"deliverySite,omitempty"`
 	TenderReference string `json:"tenderReference,omitempty"`
 	IsOffer         bool   `json:"isOffer,omitempty"`
-	Created         string `json:"created"`
-	Version         string `json:"version"`
+	Created         string `json:"created,omitempty"`
+	Version         string `json:"version,omitempty"`
 }
 
 func (i Invoice) MarshalJSON() ([]byte, error) {
@@ -183,8 +183,8 @@ type PaymentInfo struct {
 	CurrencyRate          int         `json:"currencyRate"`
 	PaymentTermPercentage int         `json:"paymentTermPercentage,omitempty"`
 	CashDiscount          struct {
-        DiscountPercentage int `json:"discountPercentage,omitempty"`
-    } `json:"cashDiscount,omitempty"`
+		DiscountPercentage int `json:"discountPercentage,omitempty"`
+	} `json:"cashDiscount,omitempty"`
 	BankReferenceCode     string `json:"bankReferenceCode"`
 	BankReferenceCodeType string `json:"bankReferenceCodeType,omitempty"`
 	ClearingCode          string `json:"clearingCode,omitempty"`
