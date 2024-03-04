@@ -91,7 +91,7 @@ type Invoice struct {
 	OrderReference         string                 `json:"orderReference"`
 	InvoiceRows            InvoiceRows            `json:"invoiceRows"`
 	VatStatus              int                    `json:"vatStatus"`
-	InvoiceNumber          int                    `json:"invoiceNumber"`
+	InvoiceNumber          int                    `json:"invoiceNumber,omitempty"`
 	OriginalInvoiceNumber  string                 `json:"originalInvoiceNumber"`
 	DeliveryStartDate      string                 `json:"deliveryStartDate,omitempty"`
 	DeliveryEndDate        string                 `json:"deliveryEndDate,omitempty"`
